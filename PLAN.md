@@ -945,29 +945,39 @@ scheduled_jobs (
 
 **Git commit**: `feat: foundation - auth, database, dashboard shell, landing page`
 
-### Milestone 2: Dashboard UI (NEXT)
-- [ ] Build Home page with stats cards (placeholder data)
-- [ ] Build activity feed component
-- [ ] Build Inbox page with conversation list
-- [ ] Build conversation detail view (call transcripts, text threads)
-- [ ] Build Account page UI (settings, profile)
-- [ ] Add responsive mobile design
-- [ ] Polish all dashboard components
+### Milestone 2: Dashboard UI ✅ COMPLETED
+- [x] Build Home page with stats cards
+- [x] Build activity feed component
+- [x] Build Inbox page with conversation list
+- [x] Build conversation detail view (call transcripts, text threads)
+- [x] Build Account page UI (settings, profile, business info)
+- [x] Build Edit AI page with polished UI
+- [x] Polish all dashboard components
 
 **Git commit**: `feat: dashboard - home stats, inbox, account UI`
 
-### Milestone 3: Edit AI Page (Scripts, Knowledge, Voice)
-- [ ] Build Edit AI page layout with sections
-- [ ] Create script card components (voice greeting, missed call text, follow-ups)
-- [ ] Implement chat-based editing interface (AI-assisted script editing)
-- [ ] Build knowledge base upload UI (PDF, URL, text input)
-- [ ] Build voice selector component with preview
-- [ ] Build contacts list and import UI
-- [ ] Add free tier tracking display (50 edits, 10 regens)
+### Milestone 3: Stats Drill-down & User Intervention ✅ COMPLETED
+- [x] Add clickable stats cards with slide-over breakdown panels
+- [x] Show inbound/outbound split for calls (AI answered vs AI initiated)
+- [x] Show inbound/outbound split for texts (auto-replies vs drip/manual)
+- [x] Show booking source breakdown (which channel drove the booking)
+- [x] Show usage breakdown (SMS count, call minutes, AI edits, phone fee)
+- [x] Add manual text sending in conversation detail view
+- [x] Add click-to-call functionality (Telnyx call connect)
+- [x] Update Edit AI with separate inbound/outbound script sections
 
-**Git commit**: `feat: edit-ai - scripts, knowledge base, voice selection, contacts`
+**Git commit**: `feat: stats-drilldown - inbound/outbound breakdown, user intervention`
 
-### Milestone 4: AI Backend
+### Milestone 4: Edit AI Functionality (Modals & Chat Interface)
+- [ ] Create script edit modal with chat-based AI editing
+- [ ] Build voice selector modal with audio previews
+- [ ] Build knowledge base upload modal (PDF, URL, text input)
+- [ ] Build contacts list modal with import functionality
+- [ ] Add free tier tracking and decrement
+
+**Git commit**: `feat: edit-ai-functionality - script editing, voice selection, knowledge upload`
+
+### Milestone 5: AI Backend
 - [ ] Setup OpenAI integration (GPT-4o-mini)
 - [ ] Implement PDF text extraction
 - [ ] Implement URL scraping
@@ -978,7 +988,7 @@ scheduled_jobs (
 
 **Git commit**: `feat: ai-backend - knowledge processing, chat editing API`
 
-### Milestone 5: Telecom Integration
+### Milestone 6: Telecom Integration
 - [ ] Setup Telnyx account + API
 - [ ] Implement phone number provisioning
 - [ ] Build inbound SMS webhook handler
@@ -992,7 +1002,7 @@ scheduled_jobs (
 
 **Git commit**: `feat: telecom - telnyx SMS, vapi voice AI, call handling`
 
-### Milestone 6: Automations
+### Milestone 7: Automations
 - [ ] Setup BullMQ + Upstash Redis
 - [ ] Implement missed call → text automation
 - [ ] Build drip campaign system (Day 1, 7, 21, 30)
@@ -1002,7 +1012,7 @@ scheduled_jobs (
 
 **Git commit**: `feat: automations - drip campaigns, missed call text`
 
-### Milestone 7: Billing System (Stripe)
+### Milestone 8: Billing System (Stripe)
 - [ ] Create Stripe products (3 tiers: $50, $75, $100)
 - [ ] Implement checkout with 7-day trial
 - [ ] Build subscription management (change plan, cancel)
@@ -1014,7 +1024,7 @@ scheduled_jobs (
 
 **Git commit**: `feat: billing - subscriptions, prepaid balance, usage tracking`
 
-### Milestone 8: Onboarding Flow
+### Milestone 9: Onboarding Flow
 - [ ] Build multi-step wizard component
 - [ ] Business info step (name, industry)
 - [ ] Plan selection step
@@ -1027,7 +1037,7 @@ scheduled_jobs (
 
 **Git commit**: `feat: onboarding - complete wizard flow`
 
-### Milestone 9: Polish & Launch
+### Milestone 10: Polish & Launch
 - [ ] Implement Google Calendar sync for appointments
 - [ ] Add email notifications (Resend)
 - [ ] Implement feature gating by plan tier

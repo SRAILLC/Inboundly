@@ -8,6 +8,8 @@ CREATE TABLE organizations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
   owner_clerk_id TEXT NOT NULL,
+  industry TEXT,
+  timezone TEXT DEFAULT 'America/New_York',
   phone_number TEXT,
   plan TEXT DEFAULT 'trial' CHECK (plan IN ('trial', 'text_ai', 'voice_ai', 'full_ai')),
   plan_status TEXT DEFAULT 'trialing' CHECK (plan_status IN ('trialing', 'active', 'past_due', 'canceled')),

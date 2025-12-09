@@ -25,6 +25,8 @@ export interface Database {
           id: string
           name: string
           owner_clerk_id: string
+          industry: string | null
+          timezone: string
           phone_number: string | null
           plan: PlanType
           plan_status: PlanStatus
@@ -44,6 +46,8 @@ export interface Database {
           id?: string
           name: string
           owner_clerk_id: string
+          industry?: string | null
+          timezone?: string
           phone_number?: string | null
           plan?: PlanType
           plan_status?: PlanStatus

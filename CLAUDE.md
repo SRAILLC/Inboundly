@@ -21,29 +21,31 @@ This file is my reference throughout development. It contains key decisions, cur
 - [x] Initialize git repo
 - [x] Wire up database sync (Clerk → Supabase)
 
-### Milestone 2: Dashboard UI (NEXT)
-- [ ] Build Home page with stats cards (placeholder data)
-- [ ] Build activity feed component
-- [ ] Build Inbox page with conversation list
-- [ ] Build conversation detail view
-- [ ] Build Account page UI (settings, profile)
-- [ ] Polish all dashboard components
+### Milestone 2: Dashboard UI (COMPLETED)
+- [x] Build Home page with stats cards
+- [x] Build activity feed component
+- [x] Build Inbox page with conversation list
+- [x] Build conversation detail view (call transcripts, text threads)
+- [x] Build Account page UI (settings, profile, business info)
+- [x] Build Edit AI page with polished UI
 
-### Milestone 3: Edit AI Page (Scripts, Knowledge, Voice)
-- [ ] Build Edit AI page layout with sections
-- [ ] Create script card components (voice greeting, missed call text, follow-ups)
-- [ ] Implement chat-based editing interface
-- [ ] Build knowledge base upload UI
-- [ ] Build voice selector with preview
-- [ ] Build contacts list and import
+### Milestone 3: Stats Drill-down & User Intervention (COMPLETED)
+- [x] Add clickable stats with slide-over breakdown panels
+- [x] Show inbound/outbound split for calls and texts
+- [x] Show booking source breakdown (which channel)
+- [x] Show usage breakdown (SMS, minutes, AI edits, phone fee)
+- [x] Add manual text sending in conversation view
+- [x] Add click-to-call functionality
+- [x] Update Edit AI with inbound/outbound script sections
 
-### Upcoming Milestones
-- Milestone 4: AI Backend (OpenAI, embeddings, chat-edit API)
-- Milestone 5: Telecom Integration (Telnyx SMS, Vapi Voice AI)
-- Milestone 6: Automations (missed call text, drip campaigns)
-- Milestone 7: Billing System (Stripe subscriptions, prepaid balance)
-- Milestone 8: Onboarding Flow (multi-step wizard)
-- Milestone 9: Polish & Launch
+### Upcoming Milestones (Milestone 4 is NEXT)
+- Milestone 4: Edit AI Functionality (script modals, voice selector, knowledge upload)
+- Milestone 5: AI Backend (OpenAI, embeddings, chat-edit API)
+- Milestone 6: Telecom Integration (Telnyx SMS, Vapi Voice AI)
+- Milestone 7: Automations (missed call text, drip campaigns)
+- Milestone 8: Billing System (Stripe subscriptions, prepaid balance)
+- Milestone 9: Onboarding Flow (multi-step wizard)
+- Milestone 10: Polish & Launch
 
 ## Key Technical Decisions
 
@@ -82,6 +84,33 @@ Required: Sign up, business info, plan, phone, payment, go live
 Skippable: Teach AI, pick voice, import contacts
 
 ## Important Patterns
+
+### Inbound vs Outbound (Key Concept)
+**Voice AI:**
+- Inbound: Customer calls → AI answers, handles questions, books appointments
+- Outbound: AI calls customer → appointment reminders, follow-ups
+
+**Text AI:**
+- Inbound: Customer texts → AI auto-replies
+- Outbound: Missed call text, drip campaigns (Day 1, 7, 21, 30), manual user texts
+
+**Bookings tracked by source:**
+- From inbound calls
+- From outbound calls
+- From inbound texts
+- From outbound texts
+
+### User Intervention (Manual Override)
+Users can intervene at any time:
+- **Manual texting**: Type & send from conversation view (via Telnyx)
+- **Click-to-call**: User clicks → their phone rings → connected to contact
+- All manual actions logged in conversation history
+
+### Stats Drill-down
+Clicking any stat card opens a slide-over panel showing:
+- Inbound/outbound breakdown
+- Recent items list
+- Click to view full details in Inbox
 
 ### Feature Gating
 - Text AI users: See text features only, voice shows "Upgrade"
