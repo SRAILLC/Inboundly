@@ -50,6 +50,9 @@ export default function MarketingLayout({
               <Link href="/terms" className="hover:text-foreground">Terms</Link>
               <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             </div>
+            <p className="text-sm text-muted-foreground">
+              © 2025 SR AI LLC. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

@@ -244,47 +244,33 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ## Known Issues & Fixes
 
-### CRITICAL: Tailwind CSS "@tailwind base" Parse Error
+### Clerk Middleware IS Required
 
-**Error Screenshot:**
+**The middleware file (`src/middleware.ts`) MUST exist** for Clerk's `auth()` function to work in API routes.
+
+**Correct middleware (simple version that works):**
+```typescript
+import { clerkMiddleware } from '@clerk/nextjs/server'
+
+export default clerkMiddleware()
+
+export const config = {
+  matcher: [
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
+}
 ```
-Build Error - Failed to compile
-./src/app/globals.css
-Module parse failed: Unexpected character '@' (1:0)
-> @tailwind base;
-| @tailwind components;
-| @tailwind utilities;
-```
 
-**Root Cause:**
-This error occurs when PostCSS fails to process Tailwind directives. Two things cause it:
-1. **Clerk Middleware** (`src/middleware.ts`) - causes edge runtime errors that cascade and break PostCSS
-2. **Bad NODE_ENV** - non-standard NODE_ENV values break PostCSS loading
+**DO NOT use `auth.protect()` in the middleware** - it causes "auth.protect is not a function" error with @clerk/nextjs v5.7.0. Just use `clerkMiddleware()` without a callback.
 
-**INSTANT FIX:**
+### Tailwind CSS "@tailwind base" Parse Error
+
+If you see this error, it's usually a cascade from another build error. Fix:
 ```bash
-# 1. Delete the middleware file (it breaks local dev)
-rm src/middleware.ts
-
-# 2. Clear cache and restart with correct NODE_ENV
 rm -rf .next
 NODE_ENV=development npm run dev
 ```
-
-**Prevention:**
-- The `src/middleware.ts` file should NOT exist for local development
-- Always run dev with: `NODE_ENV=development npm run dev`
-- The package.json dev script has been updated to include NODE_ENV=development
-
-**Why This Happens:**
-- Clerk middleware uses edge runtime which has Node.js compatibility issues
-- The error "Code generation from strings disallowed for this context" crashes the build
-- This crash prevents PostCSS from loading, causing the misleading "@tailwind" error
-- It's NOT actually a Tailwind problem - it's middleware crashing before CSS processing
-
-**For Production:**
-- Middleware works fine on Vercel (proper edge runtime support)
-- Only affects local development with `npm run dev`
 
 ---
 
@@ -296,4 +282,4 @@ NODE_ENV=development npm run dev
 - Verify all webhook signatures
 - Use Zod for input validation
 - Stream AI responses for better UX
-- **IMPORTANT**: Never commit `src/middleware.ts` - it breaks local dev
+- **IMPORTANT**: The middleware file (`src/middleware.ts`) MUST exist for Clerk auth to work
