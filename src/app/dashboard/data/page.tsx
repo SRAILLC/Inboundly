@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { KnowledgeUploadModal } from "@/components/edit/knowledge-upload-modal";
 import { ContactsModal } from "@/components/edit/contacts-modal";
 import {
@@ -12,8 +11,6 @@ import {
   Users,
   Upload,
   FileText,
-  Link,
-  ChevronRight,
   Check,
   Globe,
   FileType,
@@ -97,28 +94,14 @@ export default function DataPage() {
               </div>
             )}
 
-            <Separator />
-
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setShowKnowledgeModal(true)}
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Upload File
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setShowKnowledgeModal(true)}
-              >
-                <Link className="h-4 w-4 mr-2" />
-                Add URL
-              </Button>
-            </div>
-
-            <p className="text-xs text-muted-foreground text-center">
-              PDF, TXT, DOCX, or paste a website URL
-            </p>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => setShowKnowledgeModal(true)}
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              Manage Knowledge Base
+            </Button>
           </CardContent>
         </Card>
 
@@ -141,36 +124,14 @@ export default function DataPage() {
               <p className="text-sm text-muted-foreground">total contacts</p>
             </div>
 
-            <Separator />
-
-            <div className="space-y-2">
-              <Button
-                variant="outline"
-                className="w-full justify-between"
-                onClick={() => setShowContactsModal(true)}
-              >
-                <span className="flex items-center">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Import CSV / Excel
-                </span>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-between"
-                onClick={() => setShowContactsModal(true)}
-              >
-                <span className="flex items-center">
-                  <Users className="h-4 w-4 mr-2" />
-                  View All Contacts
-                </span>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <p className="text-xs text-muted-foreground text-center">
-              Contacts are used for follow-up campaigns
-            </p>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => setShowContactsModal(true)}
+            >
+              <Users className="h-4 w-4 mr-2" />
+              Manage Contacts
+            </Button>
           </CardContent>
         </Card>
       </div>

@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -31,12 +30,10 @@ import {
   Mail,
   Loader2,
   Check,
-  X,
   FileSpreadsheet,
   UserPlus,
   Download,
   Trash2,
-  AlertCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -203,7 +200,7 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh]">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Users className="h-5 w-5 text-primary" />
@@ -214,7 +211,7 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 overflow-hidden flex flex-col">
           <div className="flex items-center justify-between">
             <TabsList>
               <TabsTrigger value="list" className="flex items-center gap-2">
@@ -232,7 +229,7 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
             </TabsList>
           </div>
 
-          <TabsContent value="list" className="mt-4">
+          <TabsContent value="list" className="mt-4 flex-1 overflow-auto">
             {/* Search */}
             <div className="flex gap-2 mb-4">
               <div className="relative flex-1">
@@ -250,8 +247,8 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
             </div>
 
             {/* Contacts Table */}
-            <ScrollArea className="h-[400px] border rounded-lg">
-              <Table>
+            <div className="border rounded-lg overflow-auto max-h-[400px]">
+              <Table className="min-w-[600px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Name</TableHead>
@@ -321,10 +318,10 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
                   )}
                 </TableBody>
               </Table>
-            </ScrollArea>
+            </div>
           </TabsContent>
 
-          <TabsContent value="import" className="mt-4">
+          <TabsContent value="import" className="mt-4 flex-1 overflow-auto">
             <div
               className={cn(
                 "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
@@ -360,8 +357,7 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
                     Drag & drop your file here
                   </p>
                   <p className="text-sm text-muted-foreground mb-4">
-                    CSV or Excel file with columns: First Name, Last Name,
-                    Phone, Email (optional)
+                    CSV or Excel with Name and Phone columns
                   </p>
                   <Button variant="outline" asChild>
                     <label className="cursor-pointer">
@@ -381,69 +377,56 @@ export function ContactsModal({ open, onOpenChange }: ContactsModalProps) {
 
             <div className="mt-4 p-4 bg-muted/50 rounded-lg">
               <div className="flex items-start gap-2">
-                <AlertCircle className="h-4 w-4 text-muted-foreground mt-0.5" />
+                <Check className="h-4 w-4 text-green-600 mt-0.5" />
                 <div className="text-sm text-muted-foreground">
                   <p className="font-medium text-foreground mb-1">
-                    File Format Requirements
+                    We auto-format your data
                   </p>
                   <ul className="list-disc list-inside space-y-0.5">
-                    <li>First row should contain column headers</li>
-                    <li>
-                      Required columns: First Name, Last Name, Phone Number
-                    </li>
-                    <li>Optional: Email address</li>
-                    <li>Phone numbers should include country code</li>
+                    <li>Name or First Name + Last Name columns</li>
+                    <li>Phone numbers auto-formatted (we add +1 if needed)</li>
+                    <li>Email is optional</li>
                   </ul>
                 </div>
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="add" className="mt-4">
+          <TabsContent value="add" className="mt-4 flex-1 overflow-auto">
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    First Name *
-                  </label>
-                  <Input
-                    placeholder="John"
-                    value={newContact.firstName}
-                    onChange={(e) =>
-                      setNewContact((prev) => ({
-                        ...prev,
-                        firstName: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">
-                    Last Name
-                  </label>
-                  <Input
-                    placeholder="Doe"
-                    value={newContact.lastName}
-                    onChange={(e) =>
-                      setNewContact((prev) => ({
-                        ...prev,
-                        lastName: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Name *
+                </label>
+                <Input
+                  placeholder="John Doe"
+                  value={newContact.firstName + (newContact.lastName ? ` ${newContact.lastName}` : "")}
+                  onChange={(e) => {
+                    const parts = e.target.value.trim().split(" ");
+                    const firstName = parts[0] || "";
+                    const lastName = parts.slice(1).join(" ");
+                    setNewContact((prev) => ({
+                      ...prev,
+                      firstName,
+                      lastName,
+                    }));
+                  }}
+                />
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">
                   Phone Number *
                 </label>
                 <Input
-                  placeholder="+1 555-123-4567"
+                  placeholder="555-123-4567"
                   value={newContact.phone}
                   onChange={(e) =>
                     setNewContact((prev) => ({ ...prev, phone: e.target.value }))
                   }
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  We&apos;ll auto-format and add country code if needed
+                </p>
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">

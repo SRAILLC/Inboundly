@@ -174,7 +174,7 @@ export function KnowledgeUploadModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5 text-primary" />
@@ -296,24 +296,24 @@ export function KnowledgeUploadModal({
                 {processingCount > 0 && `, ${processingCount} processing`})
               </h4>
             </div>
-            <div className="max-h-[200px] overflow-y-auto space-y-2">
+            <div className="max-h-[200px] overflow-y-auto overflow-x-hidden space-y-2">
               {files.map((file) => (
                 <div
                   key={file.id}
-                  className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
+                  className="flex items-center gap-3 p-3 rounded-lg border bg-muted/30 overflow-hidden"
                 >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="flex-shrink-0">
                     {file.type === "pdf" && (
-                      <FileText className="h-4 w-4 text-red-500 flex-shrink-0" />
+                      <FileText className="h-4 w-4 text-red-500" />
                     )}
                     {file.type === "url" && (
-                      <LinkIcon className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                      <LinkIcon className="h-4 w-4 text-blue-500" />
                     )}
                     {file.type === "text" && (
-                      <Edit3 className="h-4 w-4 text-green-500 flex-shrink-0" />
+                      <Edit3 className="h-4 w-4 text-green-500" />
                     )}
-                    <span className="text-sm truncate">{file.name}</span>
                   </div>
+                  <span className="text-sm truncate max-w-[300px]">{file.name}</span>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {file.status === "uploading" && (
                       <div className="w-20">
